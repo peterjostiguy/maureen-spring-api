@@ -45,4 +45,10 @@ public class CruiseServiceTest {
         assertEquals(actual, cruiseService.getCruiseByName(actual.getCruiseName()));
     }
 
+    @Test
+    void deleteCruiseById() {
+        cruiseService.deleteCruiseById(7);
+        assertEquals(9, cruiseService.getCruiseData().size());
+    }
+
 }

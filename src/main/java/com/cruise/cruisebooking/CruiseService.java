@@ -15,7 +15,8 @@ public class CruiseService {
     }
 
     public CruiseData addToCruiseData(CruiseData cruiseData) {
-        cruiseData.setCruiseId(index++);
+        cruiseData.setCruiseId(index);
+        index++;
         listOfCruises.add(cruiseData);
         return cruiseData;
     }
@@ -36,6 +37,11 @@ public class CruiseService {
             }
         }
         return null;
+    }
+
+    public List<CruiseData> deleteCruiseById(int cruiseId) {
+        listOfCruises.remove(cruiseId);
+        return listOfCruises;
     }
 
 }

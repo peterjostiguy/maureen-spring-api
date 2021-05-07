@@ -25,15 +25,15 @@ public class CruiseControllerTest {
     MockMvc mockMvc;
 
     @MockBean
-    CruiseService dataService;
+    CruiseService cruiseService;
 
-    List<CruiseData> myDataList;
+    List<CruiseData> cruiseList;
 
     @BeforeEach
     void setUp() {
         myDataList = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            myDataList.add(new CruiseData("person-"+i));
+            cruiseList.add(new CruiseData("CruiseName-"+i));
         }
     }
 
@@ -41,7 +41,7 @@ public class CruiseControllerTest {
     void getData() throws Exception {
         when(dataService.getCruiseData()).thenReturn(myDataList);
 
-        mockMvc.perform(get("/mydata"))
+        mockMvc.perform(get("/cruisedata"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(10)));
@@ -49,21 +49,21 @@ public class CruiseControllerTest {
 
     @Test
     void addData() throws Exception {
-        when(dataService.addToCruiseData(any(CruiseData.class))).thenReturn(new CruiseData("NewlyAddedName"));
+        when(cruiseService.addToCruiseData(any(CruiseData.class))).thenReturn(new CruiseData("NewlyAddedCruiseName"));
 
         mockMvc.perform(post("/mydata")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\":\"person-0\"}"))
+                .content("{\"cruiseName\":\"cruise-0\"}"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("name").value("NewlyAddedName"));
     }
 
     @Test
     void getById() throws Exception {
-        CruiseData actual = new CruiseData("GotById");
-        actual.setCruiseId(999);
-        when(dataService.getCruiseById(anyInt())).thenReturn(actual);
-        mockMvc.perform(get("/mydata"))
+        CruiseData actual = new CruiseData("GotCruiseById");
+        actual.setCruiseId(17);
+        when(cruiseService.getCruiseById(anyInt())).thenReturn(actual);
+        mockMvc.perform(get("/cruisedata"))
                 .andExpect(status().isOk());
     }
 
@@ -71,7 +71,7 @@ public class CruiseControllerTest {
     void getByName() throws Exception {
         CruiseData actual = new CruiseData("Rob");
 
-        when(dataService.getCruiseByName(anyString())).thenReturn(actual);
+        when(cruiseService.getCruiseByName(anyString())).thenReturn(actual);
 
         mockMvc.perform(get("/mydata/Rob"))
                 .andDo(print())
