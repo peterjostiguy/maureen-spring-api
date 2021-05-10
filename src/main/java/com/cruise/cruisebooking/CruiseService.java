@@ -43,5 +43,10 @@ public class CruiseService {
         listOfCruises.remove(cruiseId);
         return listOfCruises;
     }
+//
+//    public List<CruiseData> updateCruiseById(int cruiseId, String newCruiseName) {
+//        listOfCruises.set(cruiseId, newCruiseName);
+//        return listOfCruises;
+//    }
 
 }
